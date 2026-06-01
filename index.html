@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>FitTracker - Workout & Fitness Planner</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <meta name="theme-color" content="#0f0f1a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+<body>
+  <div id="app">
+    <nav id="bottomNav" class="bottom-nav">
+      <button class="nav-btn active" data-view="home">
+        <span>🏠</span><span class="nav-label">Home</span>
+      </button>
+      <button class="nav-btn" data-view="exercises">
+        <span>💪</span><span class="nav-label">Exercises</span>
+      </button>
+      <button class="nav-btn" data-view="planner">
+        <span>📋</span><span class="nav-label">Plans</span>
+      </button>
+      <button class="nav-btn" data-view="history">
+        <span>📊</span><span class="nav-label">History</span>
+      </button>
+    </nav>
+
+    <main id="mainContent">
+      <div id="view-home" class="view active">
+        <header class="view-header">
+          <h1>FitTracker</h1>
+          <p class="subtitle">Track your workouts & stay fit</p>
+        </header>
+
+        <div id="statsCards" class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-icon">🏋️</span>
+            <span class="stat-number" id="statWorkouts">0</span>
+            <span class="stat-label">Workouts</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">⏱️</span>
+            <span class="stat-number" id="statMinutes">0</span>
+            <span class="stat-label">Minutes</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">🔥</span>
+            <span class="stat-number" id="statSets">0</span>
+            <span class="stat-label">Sets</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">📅</span>
+            <span class="stat-number" id="statStreak">0</span>
+            <span class="stat-label">Day Streak</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>My Plans</h2>
+          <div id="homePlans" class="plan-list">
+            <p class="empty-msg">No plans yet. Create one!</p>
+          </div>
+          <button class="btn btn-primary" id="homeNewPlan">+ Create New Plan</button>
+        </div>
+
+        <div class="section">
+          <h2>Last Workout</h2>
+          <div id="lastWorkout" class="last-workout-card">
+            <p class="empty-msg">You haven't worked out yet.</p>
+          </div>
+        </div>
+
+        <button class="btn btn-large btn-start" id="btnQuickStart">
+          ▶ Quick Start Workout
+        </button>
+      </div>
+
+      <div id="view-exercises" class="view">
+        <header class="view-header">
+          <h1>Exercises</h1>
+          <div class="search-bar">
+            <input type="text" id="exerciseSearch" placeholder="Search exercises..." class="search-input">
+          </div>
+          <div class="filter-tabs" id="filterTabs">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="Bodyweight">Bodyweight</button>
+            <button class="filter-btn" data-filter="Gym">Gym</button>
+          </div>
+        </header>
+
+        <div id="exerciseGrid" class="exercise-grid"></div>
+      </div>
+
+      <div id="view-exercise-detail" class="view">
+        <header class="view-header">
+          <button class="back-btn" id="detailBack">← Back</button>
+          <h1 id="detailName">Exercise</h1>
+        </header>
+
+        <div class="exercise-detail">
+          <div class="detail-visual">
+            <div class="detail-thumb" id="detailThumb">💪</div>
+            <div class="detail-body-map" id="detailBodyMap"></div>
+          </div>
+          <div class="detail-tags">
+            <span class="tag" id="detailMuscle">Muscle</span>
+            <span class="tag" id="detailDifficulty">Difficulty</span>
+            <span class="tag" id="detailEquipment">Equipment</span>
+          </div>
+          <div class="detail-section">
+            <h3>How To Do It</h3>
+            <p id="detailInstructions">Instructions...</p>
+          </div>
+          <button class="btn btn-primary" id="detailAddToWorkout">+ Add to Workout</button>
+        </div>
+      </div>
+
+      <div id="view-planner" class="view">
+        <header class="view-header">
+          <h1>Workout Plans</h1>
+        </header>
+
+        <div class="section">
+          <h2>My Plans</h2>
+          <div id="plannerList" class="plan-list"></div>
+          <button class="btn btn-small btn-primary" id="plannerNew" style="margin-top:8px">+ Create My Plan</button>
+        </div>
+
+        <div class="section">
+          <h2>Pre-made Plans 🏆</h2>
+          <p style="font-size:12px;color:#888;margin-bottom:10px">One-click import ready-made plans by professional trainers</p>
+          <div id="predefinedPlans" class="predefined-grid"></div>
+        </div>
+      </div>
+
+      <div id="view-plan-detail" class="view">
+        <header class="view-header">
+          <button class="back-btn" id="planDetailBack">← Back</button>
+          <h1 id="planDetailName">Plan Name</h1>
+        </header>
+
+        <div id="planExercises" class="plan-exercise-list"></div>
+
+        <div class="plan-actions">
+          <button class="btn btn-primary" id="planAddExercise">+ Add Exercise</button>
+          <button class="btn btn-large btn-start" id="planStartWorkout">▶ Start Workout</button>
+          <button class="btn btn-danger" id="planDelete">Delete Plan</button>
+        </div>
+      </div>
+
+      <div id="view-workout" class="view">
+        <header class="view-header">
+          <h1 id="workoutName">Workout</h1>
+          <div class="workout-timer" id="workoutTimer">00:00</div>
+        </header>
+
+        <div id="workoutExercises" class="workout-exercise-list"></div>
+
+        <div class="workout-footer">
+          <button class="btn btn-primary" id="workoutFinish">✅ Finish Workout</button>
+        </div>
+      </div>
+
+      <div id="view-history" class="view">
+        <header class="view-header">
+          <h1>History</h1>
+        </header>
+
+        <div id="historyList" class="history-list"></div>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay" style="display:none;">
+    <div class="modal" id="modalContent">
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script src="exercises.js"></script>
+  <script src="muscle-map.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
