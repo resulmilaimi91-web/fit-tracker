@@ -320,7 +320,7 @@ function renderHome() {
   } else {
     plansDiv.innerHTML = state.plans.map(p => `
       <div class="plan-card" onclick="viewPlan('${p.id}')">
-        <div><div class="plan-name">${p.name}</div><div class="plan-count">${p.exercises.length} ushtrime</div></div>
+        <div><div class="plan-name">${p.name}</div><div class="plan-count">${p.exercises.length} exercises</div></div>
         <span class="plan-arrow">›</span>
       </div>
     `).join('');
@@ -328,14 +328,14 @@ function renderHome() {
 
   const lastDiv = document.getElementById('lastWorkout');
   if (state.history.length === 0) {
-    lastDiv.innerHTML = '<p class="empty-msg">Nuk ke bërë asnjë stërvitje ende.</p>';
+    lastDiv.innerHTML = '<p class="empty-msg">You haven\'t worked out yet.</p>';
   } else {
     const last = state.history[state.history.length - 1];
     lastDiv.innerHTML = `
       <div class="lw-name">${last.planName}</div>
       <div class="lw-date">${formatDate(last.date)} • ${last.duration || 0} min</div>
       <div class="lw-stats">
-        <span>🏋️ ${last.totalSets || 0} sete</span>
+        <span>🏋️ ${last.totalSets || 0} sets</span>
         <span>🔥 ${last.totalReps || 0} reps</span>
       </div>
     `;
@@ -371,7 +371,7 @@ function renderExercises() {
   `}).join('');
 
   if (filtered.length === 0) {
-    grid.innerHTML = '<p class="empty-msg" style="grid-column:span 2">Asnjë ushtrim nuk u gjet.</p>';
+    grid.innerHTML = '<p class="empty-msg" style="grid-column:span 2">No exercises found.</p>';
   }
 }
 
@@ -407,7 +407,7 @@ function renderPlans() {
   } else {
     list.innerHTML = state.plans.map(p => `
       <div class="plan-card" onclick="viewPlan('${p.id}')">
-        <div><div class="plan-name">${p.name}</div><div class="plan-count">${p.exercises.length} ushtrime</div></div>
+         <div><div class="plan-name">${p.name}</div><div class="plan-count">${p.exercises.length} exercises</div></div>
         <span class="plan-arrow">›</span>
       </div>
     `).join('');
@@ -538,7 +538,7 @@ function removeExerciseFromPlan(index) {
 }
 
 function deletePlan(id) {
-  if (!confirm('A je i sigurt që do ta fshish këtë plan?')) return;
+  if (!confirm('Are you sure you want to delete this plan?')) return;
   state.plans = state.plans.filter(p => p.id !== id);
   saveState();
   navigateTo('planner');
@@ -757,7 +757,7 @@ function renderHistory() {
       <div class="h-name">${w.planName}</div>
       <div class="h-stats">
         <span>⏱️ ${w.duration || 0} min</span>
-        <span>🏋️ ${w.totalSets || 0} sete</span>
+        <span>🏋️ ${w.totalSets || 0} sets</span>
         <span>🔥 ${w.totalReps || 0} reps</span>
       </div>
     </div>
